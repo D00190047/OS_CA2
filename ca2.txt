@@ -1,0 +1,39 @@
+Section One
+Task 1: echo "The quick brown fox jumps over the lazy dog\n" | wc -w
+
+https://stackoverflow.com/questions/15108229/how-to-count-number-of-words-from-string-using-shell
+
+Task 2: printf "The quick brown fox jumps over the lazy dog\n" | tr [a-z] [A-Z]
+
+https://linuxhint.com/bash_lowercase_uppercase_strings/
+
+Task 3: curl https://www.dkit.ie > dkit.html
+
+https://www.thegeekstuff.com/2012/04/curl-examples/
+
+Task 4: { head -1 dkit.html & tail -1 dkit.html; } | tr '<>' '[]' > mangled.txt 
+
+https://unix.stackexchange.com/questions/64736/combine-the-output-of-two-commands-in-bash
+https://stackoverflow.com/questions/742466/how-can-i-reverse-the-order-of-lines-in-a-file
+https://www.tecmint.com/tr-command-examples-in-linux/
+
+make run-task-1
+make run-task-2
+make run-task-3
+
+Section Two
+
+
+Section Three
+Task 1: tail access.log
+
+Task 2: cut -d ' ' -f 1 access.log | sort -u
+
+https://shapeshed.com/unix-sort/#how-to-sort-and-remove-duplicates
+https://www.tecmint.com/13-basic-cat-command-examples-in-linux/
+
+Task 3: egrep " 404 " access.log | cut -d ' ' -f 3-5
+
+Task 4: egrep "Trident" access.log > access.ie.log
+
+https://linuxhint.com/linux_egrep_command_examples/
