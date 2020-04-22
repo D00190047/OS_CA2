@@ -3,7 +3,7 @@ Operating System module CA2 using Makefile
 
 Commands and References
 
-<h2><b>Section One</b><h2>
+<h2><b>Section One</b></h2>
 
 Task 1: make run-task-1<br/>
 Task 2: make run-task-2<br/>
