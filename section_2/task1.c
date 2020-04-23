@@ -9,12 +9,13 @@ int main()
      
 
     FILE *file = fopen("colours.txt", "r");
-    //array to store valid rgb values 
+    // var to store line size
     size_t size;
+    //max size of line
     size_t line_size = 20;
+    //array to store valid rgb values 
     char* line = malloc(line_size);
-    // to check valid rgb count
-    //int i=0;
+   
    	
   
     //check if file is not found
@@ -25,21 +26,22 @@ int main()
         }
     // read lenght of lines -- ref : https://stackoverflow.com/questions/3501338/c-read-file-line-by-line
       while ((size = getline(&line, &line_size, file)) != -1) {
+          // remove tab at the end of string
           line[(strlen(line)-1)] = '\0';
           if(size == 10)
           {
                 printf("%s\n", line); 
-               // ++i;
+               
           }
           if(size == 8)
           {
                 printf("%sff\n", line); 
-                //++i;
+             
           }      
        
     }
-   //printf("valid lines = %d\n",i);
+    // close and free memory
    free(line);
    fclose(file);
-
+    return 0;
 }
