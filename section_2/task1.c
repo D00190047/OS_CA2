@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-
-
 int main() 
 {
      
@@ -14,9 +12,7 @@ int main()
     //max size of line
     size_t line_size = 20;
     //array to store valid rgb values 
-    char* line = malloc(line_size);
-   
-   	
+    char* line = malloc(line_size);	
   
     //check if file is not found
      if (file== NULL)
@@ -28,16 +24,17 @@ int main()
       while ((size = getline(&line, &line_size, file)) != -1) {
           // remove tab at the end of string
           line[(strlen(line)-1)] = '\0';
-          if(size == 10)
-          {
-                printf("%s\n", line); 
-               
-          }
+
           if(size == 8)
           {
                 printf("%sff\n", line); 
              
-          }      
+          }
+          else
+          {
+               printf("%s\n", line); 
+          }
+                
        
     }
     // close and free memory
