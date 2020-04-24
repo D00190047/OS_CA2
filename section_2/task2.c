@@ -11,7 +11,7 @@ int main()
     size_t  line_size = 20;
     char line[line_size]; 
 
-    
+     // read file -- ref : https://stackoverflow.com/questions/3501338/c-read-file-line-by-line
      //check if file is not found
      if (file== NULL)
         {
