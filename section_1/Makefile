@@ -1,13 +1,16 @@
-.PHONY: run-task-1 run-task-2 run-task-3 run-task-4
+SOURCE = https://www.dkit.ie
+TARGET = dkit.html
+INPUT_TEXT = "The quick brown fox jumps over the lazy dog\n"
+OUTPUT = mangled.txt
 
 run-task-1:
-	@echo "The quick brown fox jumps over the lazy dog\n" | wc -w
+	echo ${INPUT_TEXT} | wc -w
 
 run-task-2:
-	@printf "The quick brown fox jumps over the lazy dog\n" | tr [a-z] [A-Z]
+	printf ${INPUT_TEXT} | tr [a-z] [A-Z]
 
 run-task-3:
-	@curl https://www.dkit.ie > dkit.html
+	curl ${SOURCE} > ${TARGET}
 
 run-task-4:
-	@{ head -1 dkit.html & tail -1 dkit.html; } | tr '<>' '[]' > mangled.txt 
+	{ head -1 ${TARGET} & tail -1 ${TARGET}; } | tr '<>' '[]' > ${OUTPUT}
