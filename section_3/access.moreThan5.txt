@@ -1,0 +1,8 @@
+/portfolio 5
+/portfolio 8
+/portfolio 7
+/videos 8
+/videos 6
+/portfolio 9
+/portfolio 6
+/videos 10
