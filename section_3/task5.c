@@ -3,89 +3,90 @@
 #include <string.h>
 
 #define MAX 100
+#define MIN 0
 
 int main()
 {
     //read file valid.txt
+   // https://www.w3resource.com/c-programming-exercises/file-handling/c-file-handling-exercise-4.php
     FILE *file = fopen("access.moreThan5.txt", "r");
     size_t line_size = 20;
     char line[line_size];
-    int total_p = 0, total_v = 0;
-    int total_p_time = 0, total_v_time = 0, avg_p_time, avg_v_time, shortest_p_time = MAX, longest_p_time, shortest_v_time = MAX, longest_v_time;
-    char *p_time;
-    char *v_time;
+    char portfolio[15] = "/portfolio";
+    char videos[10] = "/videos";
+
+    //pf = portfolio, vid = videos
+    int total_pf_rq = 0, total_vid_rq = 0, total_pf_time = 0, total_vid_time = 0, avg_pf_time = 0, avg_vid_time = 0;
+    int shortest_pf_time = MAX, longest_pf_time = MIN, shortest_vid_time = MAX, longest_vid_time = MIN;
+    char *pf_time, *vid_time;
 
     //check if file is not found
     if (file == NULL)
     {
-        printf("\nError --- can not find task2.txt file \n");
+        printf("Error --- could not locate file\n");
         return 1;
     }
 
     while (fgets(line, line_size, file))
     {
         // remove tab at the end of string
-        //gets rid of new line
         line[(strlen(line) - 1)] = '\0';
-        //check line equals to portfolio
+        //check if line equals to portfolio
+        //https://stackoverflow.com/questions/12784766/check-substring-exists-in-a-string-in-c/12784812
         if (strstr(line, "/portfolio") != NULL)
         {
+            pf_time = &line[(strlen(line) - 2)];
+            
+            //count the number of request
+            total_pf_rq++;
 
-            p_time = &line[(strlen(line) - 2)];
-
-            total_p++;
-
-            if (atoi(p_time) < shortest_p_time)
+            //get shortest time
+            if (atoi(pf_time) < shortest_pf_time)
             {
-                shortest_p_time = atoi(p_time);
+                shortest_pf_time = atoi(pf_time);
             }
-            if (atoi(p_time) > longest_p_time)
+            //get longest time
+            if (atoi(pf_time) > longest_pf_time)
             {
-                longest_p_time = atoi(p_time);
+                longest_pf_time = atoi(pf_time);
             }
-
-            total_p_time += atoi(p_time);
+            total_pf_time += atoi(pf_time);
         }
-        //check line equals to videos
+        //check if line equals to videos
         else if (strstr(line, "/videos") != NULL)
         {
-            v_time = &line[(strlen(line) - 2)];
-            total_v++;
-
-            if (atoi(v_time) < shortest_v_time)
+            vid_time = &line[(strlen(line) - 2)];
+            total_vid_rq++;
+            if (atoi(vid_time) < shortest_vid_time)
             {
-                shortest_v_time = atoi(v_time);
+                shortest_vid_time = atoi(vid_time);
             }
-            if (atoi(v_time) > longest_v_time)
+            if (atoi(vid_time) > longest_vid_time)
             {
-                longest_v_time = atoi(v_time);
+                longest_vid_time = atoi(vid_time);
             }
-
-            total_v_time += atoi(v_time);
+            total_vid_time += atoi(vid_time);
         }
     }
 
-    printf("Request Path: /portfolio\n");
-    //printf("%d\n", total_p_time);
-    printf("Total number of request: %d\n", total_p);
-    avg_p_time = total_p_time / total_p;
-    printf("Average processing time: %d\n", avg_p_time);
-    printf("Shortest processing time: %d\n", shortest_p_time);
-    printf("Longest processing time: %d\n", longest_p_time);
+    printf("\nRequest path: %s\n", portfolio);
+    //printf("%d\n", total_pf_time);
+    printf("Total number of request: %d\n", total_pf_rq);
+    printf("Shortest processing time: %d\n", shortest_pf_time);
+    printf("Longest processing time: %d\n", longest_pf_time);
+    avg_pf_time = total_pf_time / total_pf_rq;
+    printf("Average processing time: %d\n", avg_pf_time);
 
     printf("\n");
 
-    printf("Request Path: /videos\n");
-    //printf("%d\n", total_v_time);
-    printf("Total number of request: %d\n", total_v);
-    avg_v_time = total_v_time / total_v;
-    printf("Average processing time: %d\n", avg_v_time);
-    printf("Shortest processing time: %d\n", shortest_v_time);
-    printf("Longest processing time: %d\n", longest_v_time);
+    printf("Request Path: %s\n", videos);
+    //printf("%d\n", total_vid_time);
+    printf("Total number of request: %d\n", total_vid_rq);
+    printf("Shortest processing time: %d\n", shortest_vid_time);
+    printf("Longest processing time: %d\n", longest_vid_time);
+    avg_vid_time = total_vid_time / total_vid_rq;
+    printf("Average processing time: %d\n", avg_vid_time);
 
-    //printf("%d\n %d;", total_p, total_v);
-    //  printf("%d\n %d;", total_p_time, total_v_time);
-    printf("\n");
     fclose(file);
     return 0;
 }
