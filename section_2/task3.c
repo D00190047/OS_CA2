@@ -5,7 +5,7 @@
 int main() 
 {
     //read file valid.txt
-    FILE *file = fopen("task2.txt", "r");
+    FILE *file = fopen("valid.txt", "r");
     size_t  line_size = 20;
     char line[line_size]; 
 

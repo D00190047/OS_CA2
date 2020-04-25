@@ -20,16 +20,16 @@ run-task-1: ${OBJECTS}
 run-task-2: ${OBJECTS} ${CFILE}
 #ref -- find char using awk : https://stackoverflow.com/questions/11401070/using-awk-to-print-characters-of-specific-index-on-a-line
 #@awk ' { print substr($$0, 4, 2) }' valid.txt > task2.txt && sed ':a;N;$!ba;s/\n/;/g' task2.txt task2.txt
-	@$(MAKE) create_valid && awk ' { print substr($$0, 4, 2) }' ${VALID} > task2.txt &&  ${CC} ${CFILE} -o task2 ${FLAGS} && ${BUILD} && rm task2.txt && rm ${VALID} && rm task2
+	@$(MAKE) create_valid && cut -b 4,6 valid.txt > task2.txt &&${CC} ${CFILE} -o task2 ${FLAGS} && ${BUILD} && rm task2.txt && rm ${VALID}
 
-#
+#	@$(MAKE) create_valid && awk ' { print "rgba(" substr( $$0, 2, 2) "," substr( $$0, 4, 2) "," substr( $$0, 6, 2) "," substr( $$0, 8, 2) ")"}' ${VALID}> output.txt && rm ${VALID} && sort -t ',' -k 4 output.txt > rgba-colours.txt && rm output.txt
 run-task-3: ${OBJECTS}
 	@$(MAKE) create_valid && awk ' { print "rgba(" substr( $$0, 2, 2) "," substr( $$0, 4, 2) "," substr( $$0, 6, 2) "," substr( $$0, 8, 2) ")"}' ${VALID}> output.txt && rm ${VALID} && sort -t ',' -k 4 output.txt > rgba-colours.txt && rm output.txt
 
 #ref -- how to call make function in another make function : https://stackoverflow.com/questions/2206128/how-to-call-makefile-from-another-makefile
 #creates a txt with all valid rgb code
 create_valid:
-	@awk ' { if (length($0) == 7) print $$0 "ff" } { if(length($0) == 9) print }' ${OBJECTS} >> output.txt && egrep "#{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]" output.txt > ${VALID} && rm output.txt
+	@gcc task1.c -o task1 -Wextra -Wall -Wpedantic && ./task1 > output.txt && egrep "#{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]" output.txt > ${VALID} && rm output.txt
 
-clean:
-	@rm rgba-colours.txt
+clean: rgba-colours.txt task1 task2
+	@rm rgba-colours.txt && rm task1 && rm task2
