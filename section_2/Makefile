@@ -12,10 +12,11 @@ run-task-2:
 
 #
 run-task-3:
-	@$(MAKE) create_valid && awk ' { print "rgba(" substr( $$0, 2, 2) "," substr( $$0, 4, 2) "," substr( $$0, 6, 2) "," substr( $$0, 8, 2) ")"}' valid.txt > rgba-colours.txt && rm valid.txt && sort -t ',' -k 4 rgba-colours.txt
+	@$(MAKE) create_valid && awk ' { print "rgba(" substr( $$0, 2, 2) "," substr( $$0, 4, 2) "," substr( $$0, 6, 2) "," substr( $$0, 8, 2) ")"}' valid.txt > output.txt && rm valid.txt && sort -t ',' -k 4 output.txt > rgba-colours.txt && rm output.txt
 
 #ref -- how to call make function in another make function : https://stackoverflow.com/questions/2206128/how-to-call-makefile-from-another-makefile
-#creates a txt with all valid rgb codes
-# egrep '#[0-9a-fA-F]+' valid.txt > output.txt
+#creates a txt with all valid rgb code
+# egrep "#{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]" valid.txt
+#{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]
 create_valid:
-	@awk ' { if (length($0) == 7) print $$0 "ff" } { if(length($0) == 9) print }' colours.txt >> output.txt && awk '/'#[0-9a-fA-F]+'/{ print $0 }' output.txt > valid.txt && rm output.txt
+	@awk ' { if (length($0) == 7) print $$0 "ff" } { if(length($0) == 9) print }' colours.txt >> output.txt && egrep "#{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]" output.txt > valid.txt && rm output.txt
