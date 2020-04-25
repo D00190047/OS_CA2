@@ -3,12 +3,19 @@
 run-task-1:
 #ref-- awk command = https://www-users.york.ac.uk/~mijp1/teaching/2nd_year_Comp_Lab/guides/grep_awk_sed.pdf
 # added custome c to add FF at the end of every 6 digit rgb code (Not sure if needed)
-	#@awk ' { if (length($0) == 7 ||length($0) == 9) print }' colours.txt >> valid.txt && gcc task1.c -o task2 -Wextra -Wall -Wpedantic && ./task1 > output.txt && cat output.txt && rm valid.txt
-	@awk ' { if (length($0) == 7) print $$0 "ff" } { if(length($0) == 9) print }' colours.txt >> valid.txt && cat valid.txt
+	#@ previous attempt : awk ' { if (length($0) == 7 ||length($0) == 9) print }' colours.txt >> valid.txt && gcc task1.c -o task2 -Wextra -Wall -Wpedantic && ./task1 > output.txt && cat output.txt && rm valid.txt
+	@$(MAKE) create_valid && cat valid.txt && rm valid.txt
 run-task-2:
-#ref -- find char using awk = https://stackoverflow.com/questions/11401070/using-awk-to-print-characters-of-specific-index-on-a-line
+#ref -- find char using awk : https://stackoverflow.com/questions/11401070/using-awk-to-print-characters-of-specific-index-on-a-line
 #@awk ' { print substr($$0, 4, 2) }' valid.txt > task2.txt && sed ':a;N;$!ba;s/\n/;/g' task2.txt task2.txt
-	@awk ' { print substr($$0, 4, 2) }' valid.txt > task2.txt &&  gcc task2.c -o task2 -Wextra -Wall -Wpedantic && ./task2 && rm task2.txt
+	@$(MAKE) create_valid && awk ' { print substr($$0, 4, 2) }' valid.txt > task2.txt &&  gcc task2.c -o task2 -Wextra -Wall -Wpedantic && ./task2 && rm task2.txt && rm valid.txt && rm task2
 
+#
 run-task-3:
-	@awk ' { print "(" substr( $$0, 2, 2) "," substr( $$0, 4, 2) "," substr( $$0, 6, 2) "," substr( $$0, 8, 2) ")"}' valid.txt > rgba-colours.txt && sort -t ',' -k 4 rgba-colours.txt 
+	@$(MAKE) create_valid && awk ' { print "rgba(" substr( $$0, 2, 2) "," substr( $$0, 4, 2) "," substr( $$0, 6, 2) "," substr( $$0, 8, 2) ")"}' valid.txt > rgba-colours.txt && rm valid.txt && sort -t ',' -k 4 rgba-colours.txt
+
+#ref -- how to call make function in another make function : https://stackoverflow.com/questions/2206128/how-to-call-makefile-from-another-makefile
+#creates a txt with all valid rgb codes
+# egrep '#[0-9a-fA-F]+' valid.txt > output.txt
+create_valid:
+	@awk ' { if (length($0) == 7) print $$0 "ff" } { if(length($0) == 9) print }' colours.txt >> output.txt && awk '/'#[0-9a-fA-F]+'/{ print $0 }' output.txt > valid.txt && rm output.txt
