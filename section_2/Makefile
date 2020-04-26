@@ -33,5 +33,5 @@ create_valid: ${CFILE1}
 	#@${CC} ${CFILE1} -o task1 -Wextra -Wall -Wpedantic && ${BUILD1} > output.txt && egrep "#{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]" output.txt > ${VALID} && rm output.txt
 	@egrep "#[0-9a-fA-F]{6}$$" colours.txt > output.txt	&& egrep "#[0-9a-fA-F]{8}$$" colours.txt >> output.txt && ${CC} ${CFILE1} -o task1 -Wextra -Wall -Wpedantic && ${BUILD1} > ${VALID} && rm output.txt
 
-clean: rgba-colours.txt task1 task2
-	@rm rgba-colours.txt && rm task1 && rm task2
+clean: rgba-colours.txt task1 task2 task3
+	@rm rgba-colours.txt && rm task1 && rm task2 && rm task3
