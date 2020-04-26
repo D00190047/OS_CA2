@@ -15,6 +15,11 @@ int main()
     char *blue = malloc(line_size);
     char *alpha = malloc(line_size);
 
+    int red_dec = 0;
+    int green_dec = 0;
+    int blue_dec = 0;
+    int alpha_dec = 0;
+
     // read file -- ref : https://stackoverflow.com/questions/3501338/c-read-file-line-by-line
     //check if file is not found
     if (file == NULL)
@@ -35,29 +40,35 @@ int main()
         int ishex_r;
         //compile regex
         regex_t regex;
-        int tot_line_dec = 0;
-        int invalid =1;
+        int invalid = 1;
 
         ishex_r = regcomp(&regex, "[0-9][0-9]", 0);
         ishex_r = regexec(&regex, hexstring_r, 0, NULL, 0);
         if (ishex_r == REG_NOMATCH)
         {
-            int red_dec = (int)strtol(hexstring_r, NULL, 16);
-           //printf("r = %d", red_dec);
-            if(red_dec<= 255 && red_dec>0)
+            red_dec = (int)strtol(hexstring_r, NULL, 16);
+            //printf("r = %d", red_dec);
+            if (red_dec <= 255 && red_dec > 0)
             {
-                invalid =0;
+                invalid = 0;
+            }
+            else
+            {
+                invalid = 1;
             }
         }
         else
         {
-            int red_dec = atoi(hexstring_r);
+            red_dec = atoi(hexstring_r);
             //printf("r = %d ", red_dec);
-            if(red_dec<= 255 && red_dec>0)
+            if (red_dec <= 255 && red_dec > 0)
             {
-                invalid =0;
+                invalid = 0;
             }
-            
+            else
+            {
+                invalid = 1;
+            }
         }
         // ----------------- get green value
         //get green value into dec
@@ -72,31 +83,38 @@ int main()
         ishex_g = regexec(&regex, hexstring_g, 0, NULL, 0);
         if (ishex_g == REG_NOMATCH)
         {
-            int green_dec = (int)strtol(hexstring_g, NULL, 16);
+            green_dec = (int)strtol(hexstring_g, NULL, 16);
             //printf(" g = %d ", green_dec);
-            if(green_dec<= 255 && green_dec>0)
+            if (green_dec <= 255 && green_dec > 0)
             {
-                invalid =0;
+                invalid = 0;
             }
-            
+            else
+            {
+                invalid = 1;
+            }
         }
         else
         {
-            int green_dec = atoi(hexstring_g);
+            green_dec = atoi(hexstring_g);
             //printf(" g = %d ", green_dec);
-            if(green_dec<= 255 && green_dec>0)
+            if (green_dec <= 255 && green_dec > 0)
             {
-                invalid =0;
+                invalid = 0;
             }
-            
+            else
+            {
+                invalid = 1;
+            }
         }
         // ----------------- get blue value
 
         //get green value into dec
         strncpy(blue, &line[6], line_size);
-        blue[(strlen(blue) - 3)] = '\0';
-        //printf("rgba(%s)\n",green);
+        blue[(strlen(blue) - 4)] = '\0';
+        //printf("rgba(%s) ",blue);
         const char *hexstring_b = blue;
+        //printf(" %s ",hexstring_b);
         //check if value contains letter
         int ishex_b;
         //compile regex
@@ -104,31 +122,37 @@ int main()
         ishex_b = regexec(&regex, hexstring_b, 0, NULL, 0);
         if (ishex_b == REG_NOMATCH)
         {
-            int blue_dec = (int)strtol(hexstring_g, NULL, 16);
-            //printf("b = %d", blue_dec);
-            if(blue_dec<= 255 && blue_dec>0)
+            blue_dec = (int)strtol(hexstring_b, NULL, 16);
+            //printf("b = %d\n", blue_dec);
+            if (blue_dec <= 255 && blue_dec > 0)
             {
-                invalid =0;
+                invalid = 0;
             }
-            
+            else
+            {
+                invalid = 1;
+            }
         }
         else
         {
-            int blue_dec = atoi(hexstring_g);
-            //printf(" b = %d", blue_dec); 
-            if(blue_dec<= 255 && blue_dec>0)
+            blue_dec = atoi(hexstring_b);
+            //printf(" b = %d\n", blue_dec);
+            if (blue_dec <= 255 && blue_dec > 0)
             {
-                invalid =0;
+                invalid = 0;
             }
-           
+            else
+            {
+                invalid = 1;
+            }
         }
 
         // ----------------- get alpha value
 
         //get green value into dec
-        strncpy(alpha, &line[6], line_size);
-        alpha[(strlen(alpha) - 3)] = '\0';
-        //printf("rgba(%s)\n",green);
+        strncpy(alpha, &line[9], line_size);
+        //alpha[(strlen(alpha) - 1)] = '\0';
+        //printf("rgba(%s)\n", alpha);
         const char *hexstring_a = alpha;
         //check if value contains letter
         int ishex_a;
@@ -137,29 +161,35 @@ int main()
         ishex_a = regexec(&regex, hexstring_a, 0, NULL, 0);
         if (ishex_a == REG_NOMATCH)
         {
-            int alpha_dec = (int)strtol(hexstring_g, NULL, 16);
+            alpha_dec = (int)strtol(hexstring_a, NULL, 16);
             //printf(" a = %d\n", alpha_dec);
-            if(alpha_dec<= 255 && alpha_dec>0)
+            if (alpha_dec <= 255 && alpha_dec > 0)
             {
-                invalid =0;
+                invalid = 0;
             }
-       
+            else
+            {
+                invalid = 1;
+            }
         }
         else
         {
-            int alpha_dec = atoi(hexstring_g);
-            //printf(" a = %d\n", alpha_dec);        
-            if(alpha_dec<= 255 && alpha_dec>0)
+            alpha_dec = atoi(hexstring_a);
+            //printf(" a = %d\n", alpha_dec);
+            if (alpha_dec <= 255 && alpha_dec > 0)
             {
-                invalid =0;
+                invalid = 0;
             }
-           
+            else
+            {
+                invalid = 1;
+            }
         }
         //printf("%d\n",tot_line_dec);
-        if(invalid==0)
+        if (invalid == 0)
         {
-            line[(strlen(line)-1)] = '\0';
-            printf("rgba(%s)\n",line);
+            line[(strlen(line) - 1)] = '\0';
+            printf("rgba(%d,%d,%d,%d)\n", red_dec, green_dec, blue_dec, alpha_dec);
         }
     }
 
