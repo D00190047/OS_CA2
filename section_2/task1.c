@@ -14,7 +14,7 @@ int main()
     //check if file is not found
     if (file == NULL)
     {
-        printf("\nError --- can not find task2.txt file \n");
+        printf("\nError --- can not find output.txt file \n");
         return 1;
     }
 
