@@ -15,9 +15,10 @@ run-task-3:
 run-task-4:
 	egrep "Trident" access.log > access.ie.log
 
+#using regex to find more than 5 
 #output the text file, create a build directory to store built files, compile and run the solution
 run-task-5:
-	egrep " [5-9] | 10 " access.log | cut -d ' ' -f 4,7 > access.moreThan5.txt && mkdir ./build && ${CC} ${SOURCE} ${FLAGS} -o ${BUILD} && ${BUILD}
+	egrep " [1-9][0-9] | [5-9] " access.log | cut -d ' ' -f 4,7 > access.moreThan5.txt && mkdir ./build && ${CC} ${SOURCE} ${FLAGS} -o ${BUILD} && ${BUILD}
 
 #remove the build folder and built files
 clean:
