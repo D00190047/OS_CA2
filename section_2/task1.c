@@ -5,7 +5,7 @@
 int main()
 {
     //read file valid.txt
-    FILE *file = fopen("colours.txt", "r");
+    FILE *file = fopen("output.txt", "r");
     size_t line_size = 20;
     //array to store valid rgb values
     char *line = malloc(line_size);
@@ -22,15 +22,15 @@ int main()
     {
         // remove tab at the end of string
         line[(strlen(line) - 1)] = '\0';
-        if (size == 10)
-        {
-            printf("%s\n", line);
-            // ++i;
-        }
         if (size == 8)
         {
             printf("%sff\n", line);
-            //++i;
+            // ++i;
+        }
+        else
+        {
+            printf("%s\n", line);
+            
         }
     }
     printf("\n");

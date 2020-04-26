@@ -3,9 +3,10 @@ CC = gcc
 FLAGS = -Wextra -Wall -Wpedantic
 # txt file with colour rgb values
 OBJECTS = colours.txt
-BUILD = ./task2
+
+BUILD1 = ./task1
 # C FILE WITH CODE
-CFILE = task2.c
+CFILE1 = task1.c
 # FILE THAT WILL STORE ALL VALID rgb & rgba
 VALID = valid.txt
 
@@ -17,19 +18,20 @@ run-task-1: ${OBJECTS}
 	#@ previous attempt : awk ' { if (length($0) == 7 ||length($0) == 9) print }' colours.txt >> valid.txt && gcc task1.c -o task2 -Wextra -Wall -Wpedantic && ./task1 > output.txt && cat output.txt && rm valid.txt
 	@$(MAKE) create_valid && cat ${VALID} && rm ${VALID}
 
-run-task-2: ${OBJECTS} ${CFILE}
+run-task-2: ${OBJECTS}
 #ref -- find char using awk : https://stackoverflow.com/questions/11401070/using-awk-to-print-characters-of-specific-index-on-a-line
 #@awk ' { print substr($$0, 4, 2) }' valid.txt > task2.txt && sed ':a;N;$!ba;s/\n/;/g' task2.txt task2.txt
-	@$(MAKE) create_valid && cut -b 4,6 valid.txt > task2.txt &&${CC} ${CFILE} -o task2 ${FLAGS} && ${BUILD} && rm task2.txt && rm ${VALID}
+	@$(MAKE) create_valid && cut -b 4,6 valid.txt > task2.txt && paste -s -d ";"  task2.txt && rm task2.txt && rm ${VALID}
 
 #	@$(MAKE) create_valid && awk ' { print "rgba(" substr( $$0, 2, 2) "," substr( $$0, 4, 2) "," substr( $$0, 6, 2) "," substr( $$0, 8, 2) ")"}' ${VALID}> output.txt && rm ${VALID} && sort -t ',' -k 4 output.txt > rgba-colours.txt && rm output.txt
 run-task-3: ${OBJECTS}
-	@$(MAKE) create_valid && awk ' { print "rgba(" substr( $$0, 2, 2) "," substr( $$0, 4, 2) "," substr( $$0, 6, 2) "," substr( $$0, 8, 2) ")"}' ${VALID}> output.txt && rm ${VALID} && sort -t ',' -k 4 output.txt > rgba-colours.txt && rm output.txt
+	@$(MAKE) create_valid &&  bash -c "paste --delimiter=',' <(cut -b 2,3 valid.txt ) <(cut -b 4,5 valid.txt ) <(cut -b 6,7 valid.txt ) <(cut -b 8,9 valid.txt) > output.txt" && gcc task3.c -o task3 && ./task3 > rgba-colours.txt && rm valid.txt && rm output.txt
 
 #ref -- how to call make function in another make function : https://stackoverflow.com/questions/2206128/how-to-call-makefile-from-another-makefile
 #creates a txt with all valid rgb code
-create_valid:
-	@gcc task1.c -o task1 -Wextra -Wall -Wpedantic && ./task1 > output.txt && egrep "#{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]" output.txt > ${VALID} && rm output.txt
+create_valid: ${CFILE1}
+	#@${CC} ${CFILE1} -o task1 -Wextra -Wall -Wpedantic && ${BUILD1} > output.txt && egrep "#{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]{1}[0-9a-fA-F]" output.txt > ${VALID} && rm output.txt
+	@egrep "#[0-9a-fA-F]{6}$$" colours.txt > output.txt	&& egrep "#[0-9a-fA-F]{8}$$" colours.txt >> output.txt && ${CC} ${CFILE1} -o task1 -Wextra -Wall -Wpedantic && ${BUILD1} > ${VALID} && rm output.txt
 
 clean: rgba-colours.txt task1 task2
 	@rm rgba-colours.txt && rm task1 && rm task2
