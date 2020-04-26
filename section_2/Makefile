@@ -25,7 +25,7 @@ run-task-2: ${OBJECTS}
 
 #	@$(MAKE) create_valid && awk ' { print "rgba(" substr( $$0, 2, 2) "," substr( $$0, 4, 2) "," substr( $$0, 6, 2) "," substr( $$0, 8, 2) ")"}' ${VALID}> output.txt && rm ${VALID} && sort -t ',' -k 4 output.txt > rgba-colours.txt && rm output.txt
 run-task-3: ${OBJECTS}
-	@$(MAKE) create_valid &&  bash -c "paste --delimiter=',' <(cut -b 2,3 valid.txt ) <(cut -b 4,5 valid.txt ) <(cut -b 6,7 valid.txt ) <(cut -b 8,9 valid.txt) | tr [:lower:] [:upper:]> output.txt" && gcc task3.c -o task3 && ./task3 > rgba-colours.txt && rm valid.txt && rm output.txt
+	@$(MAKE) create_valid &&  bash -c "paste --delimiter=',' <(cut -b 2,3 ${VALID} ) <(cut -b 4,5 ${VALID} ) <(cut -b 6,7 ${VALID} ) <(cut -b 8,9 ${VALID}) | tr [:lower:] [:upper:]> output.txt" && gcc task3.c -o task3 && ./task3 > rgba-colours.txt && rm ${VALID} && rm output.txt
 
 #ref -- how to call make function in another make function : https://stackoverflow.com/questions/2206128/how-to-call-makefile-from-another-makefile
 #creates a txt with all valid rgb code
