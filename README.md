@@ -1,23 +1,12 @@
-# OS_CA2
-Operating System module CA2 using Makefile
-
-Commands and References
-
-<h2><b>Section One</b></h2>
-
+<h1>Operating System module CA2 using Makefile, Piping and Unix Tools</h1>
+<h2>Description</h2>
+<p>This CA is divided into 3 sections, section one, section two and section three.</p<>
+<br/>
+<h2>Instruction</h2>
+<p>For each tasks, run the make command with correct task name</p>
 Task 1: make run-task-1<br/>
 Task 2: make run-task-2<br/>
-Task 3: make run-task-3<br/>
-
-https://stackoverflow.com/questions/15108229/how-to-count-number-of-words-from-string-using-shell<br/>
-https://linuxhint.com/bash_lowercase_uppercase_strings/<br/>
-https://www.thegeekstuff.com/2012/04/curl-examples/<br/>
-https://unix.stackexchange.com/questions/64736/combine-the-output-of-two-commands-in-bash<br/>
-https://stackoverflow.com/questions/742466/how-can-i-reverse-the-order-of-lines-in-a-file<br/>
-https://www.tecmint.com/tr-command-examples-in-linux/<br/>
-
-<h2><b>Section Two</b></h2>
-
-<h2><b>Section Three</b></h2>
+  ...</br/>
+Task 5: make run-task-5<br/>
 
 
