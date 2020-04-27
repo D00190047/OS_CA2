@@ -14,3 +14,7 @@ run-task-3:
 
 run-task-4:
 	{ head -1 ${TARGET} & tail -1 ${TARGET}; } | tr '<>' '[]' > ${OUTPUT}
+
+#remove created files from previous tasks
+clean:
+	rm dkit.html && rm mangled.txt
